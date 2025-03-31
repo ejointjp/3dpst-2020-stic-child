@@ -6,6 +6,7 @@
     $query = Stic_Url_Manager::query();
     $query = wp_parse_args($query);
 
+
     $tax_queries = array();
 
     foreach ($query as $key => $value) {
@@ -28,6 +29,7 @@
       }
     }
 
+    var_dump($tax_queries);
     $args = array(
       'posts_per_page' => -1,
       'orderby'        => 'post_date',
@@ -69,14 +71,14 @@
                   foreach ($terms as $term) :
                   ?>
                     <label class="c-control__item">
-                      <input type="radio" name="mp" value="<?php echo $term->term_id; ?>" v-model="values['mp']" data-label="<?php echo $term->name; ?>" <?php checked($term->term_id, $query['material-printer']); ?>>
+                      <input type="radio" name="mp" value="<?php echo $term->term_id; ?>" v-model="values['mp']" data-label="<?php echo $term->name; ?>" <?php checked($term->term_id, $query['material-printer'] ?? null); ?>>
                       <?php $upload_dir = wp_upload_dir(); ?>
                       <div class="c-control__figure"><img src="<?php echo $upload_dir['baseurl']; ?>/3d-printer/<?php echo $term->slug; ?>.png" alt="<?php echo $term->name; ?>"></div>
                       <div class="c-control__label"><?php echo $term->name; ?></div>
                     </label>
                   <?php endforeach; ?>
                   <label class="c-control__item">
-                    <input type="radio" name="mp" value="" v-model="values['mp']" data-label="" <?php checked('', $query['material-printer']); ?>>
+                    <input type="radio" name="mp" value="" v-model="values['mp']" data-label="" <?php checked('', $query['material-printer'] ?? null); ?>>
                     <?php $upload_dir = wp_upload_dir(); ?>
                     <div class="c-control__figure"><img src="<?php echo $upload_dir['baseurl']; ?>/3d-printer/all.png" alt=""></div>
                     <div class="c-control__label">指定なし</div>
@@ -92,7 +94,7 @@
                   foreach ($terms as $term) :
                   ?>
                     <label class="c-control__item">
-                      <input type="checkbox" class="c-control__input" name="mf" value="<?php echo esc_attr($term->term_id); ?>" v-model="values['mf']" data-label="<?php echo $term->name; ?>" <?php checked(is_array($query['material-feature']) ? in_array(strval($term->term_id), $query['material-feature'], true) : false); ?>>
+                      <input type="checkbox" class="c-control__input" name="mf" value="<?php echo esc_attr($term->term_id); ?>" v-model="values['mf']" data-label="<?php echo $term->name; ?>" <?php checked(is_array($query['material-feature'] ?? null) ? in_array(strval($term->term_id), $query['material-feature'] ?? null, true) : false); ?>>
                       <span class="c-control__label"><?php echo esc_html($term->name); ?></span>
                     </label>
 
@@ -109,7 +111,7 @@
                   ?>
 
                     <label class="c-control__item">
-                      <input type="radio" class="c-control__input" name="mu" value="<?php echo esc_attr($term->term_id); ?>" v-model="values['mu']" data-label="<?php echo $term->name; ?>" <?php checked(is_array($query['material-usage']) ? in_array(strval($term->term_id), $query['material-usage'], true) : false); ?>>
+                      <input type="radio" class="c-control__input" name="mu" value="<?php echo esc_attr($term->term_id); ?>" v-model="values['mu']" data-label="<?php echo $term->name; ?>" <?php checked(is_array($query['material-usage'] ?? null) ? in_array(strval($term->term_id), $query['material-usage'] ?? null, true) : false); ?>>
                       <span class="c-control__label"><?php echo esc_html($term->name); ?></span>
                     </label>
 
@@ -130,7 +132,7 @@
                     <?php foreach ($terms as $key => $term) : ?>
 
                       <label class="c-control__item">
-                        <input type="radio" class="c-control__input" name="mc" value="<?php echo esc_attr($term->term_id); ?>" v-model="values['mc']" data-label="<?php echo $term->name; ?>" <?php checked(is_array($query['material-color']) ? in_array(strval($term->term_id), $query['material-color'], true) : false); ?>>
+                        <input type="radio" class="c-control__input" name="mc" value="<?php echo esc_attr($term->term_id); ?>" v-model="values['mc']" data-label="<?php echo $term->name; ?>" <?php checked(is_array($query['material-color'] ?? null) ? in_array(strval($term->term_id), $query['material-color'] ?? null, true) : false); ?>>
                         <span class="c-control__label"><?php echo esc_html($term->name); ?></span>
                       </label>
 

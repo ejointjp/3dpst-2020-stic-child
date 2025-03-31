@@ -8,7 +8,7 @@
   </div>
 
 
-  <?php if (is_home() || is_archive()) : ?>
+  <?php if (is_home() || is_category()) : ?>
     <div class="blog-nav">
       <div class="c-container _lg_">
         <div class="blog-nav-list">

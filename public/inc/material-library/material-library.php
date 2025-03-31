@@ -2,7 +2,6 @@
 add_action('init', 'c3_custom_post_types');
 function c3_custom_post_types()
 {
-
   $slug   = 'material';
   $name   = '材料ライブラリ';
   $labels = stic_custom_post_type_label($name);
@@ -18,6 +17,41 @@ function c3_custom_post_types()
     'show_in_admin_bar'   => true,
     'show_in_rest'        => true,
     'rest_base'           => 'material',
+    'menu_position'       => 20,
+    'menu_icon'           => null,
+    'hierarchical'        => true,
+    'taxonomies'          => array(),
+    'has_archive'         => false,
+    'supports'            => array(
+      'title',
+      'editor',
+      'author',
+      'thumbnail',
+      // 'excerpt',
+      'trackbacks',
+      // 'custom-fields',
+      // 'comments',
+      'revisions',
+      // 'post-formats'
+    ),
+  );
+  register_post_type($slug, $args);
+
+  $slug   = 'item';
+  $name   = '材料と付属品';
+  $labels = stic_custom_post_type_label($name);
+  $args   =  array(
+    'labels'              => $labels,
+    'description'         => '',
+    'public'              => true,
+    'exclude_from_search' => false,
+    'publicly_queryable'  => true,
+    'show_ui'             => true,
+    'show_in_nav_menus'   => true,
+    'show_in_menu'        => true,
+    'show_in_admin_bar'   => true,
+    'show_in_rest'        => true,
+    'rest_base'           => 'item',
     'menu_position'       => 20,
     'menu_icon'           => null,
     'hierarchical'        => true,

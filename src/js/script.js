@@ -103,24 +103,13 @@ if ( $formAbout.length ) {
 		changeForm();
 	} );
 }
-// $('.colorbox').colorbox({
-//   maxWidth: '100%',
-//   maxHeight: '100%',
-//   opacity: 0.7
-// })
-//
-// $('.colorbox-gallery').colorbox({
-//   rel: 'gallery',
-//   maxWidth: '100%',
-//   maxHeight: '95%',
-//   opacity: 0.7
-// })
 
-// $('.file_userdata_label').each(function () {
-//   var html = $(this).html()
-//   $(this).html(html.replace('required', '必須'))
-// })
-
-// $(function () {
-//   $.smooziee()
-// })
+// 埋め込みカレンダーの高さを自動調節
+// eslint-disable-next-line @wordpress/no-global-event-listener
+window.addEventListener( 'message', ( event ) => {
+	if ( event.data.hasOwnProperty( 'height' ) ) {
+		const iframe = document.querySelector( 'iframe.iframe' );
+		iframe.style.height = `${ event.data.height }px`;
+		iframe.style.border = 'none';
+	}
+} );

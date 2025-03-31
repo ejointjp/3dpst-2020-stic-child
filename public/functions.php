@@ -78,8 +78,7 @@ add_action(
 );
 
 add_action('template_redirect', 'custom_after_the_content');
-function custom_after_the_content()
-{
+function custom_after_the_content() {
   // 造形サンプル一覧ページ
   if (is_page('samples')) {
     add_filter('after_the_content', 'get_the_content_samples', 9, 1);
@@ -98,8 +97,7 @@ function custom_after_the_content()
   }
 }
 
-function get_the_content_hardwares($content)
-{
+function get_the_content_hardwares($content) {
   ob_start();
   get_template_part('project/content-body-hardwares');
   $content .= ob_get_clean();
@@ -107,8 +105,7 @@ function get_the_content_hardwares($content)
   return $content;
 }
 
-function get_the_content_samples($content)
-{
+function get_the_content_samples($content) {
   ob_start();
   get_template_part('project/content-body-samples');
   $content .= ob_get_clean();
@@ -116,8 +113,7 @@ function get_the_content_samples($content)
   return $content;
 }
 
-function get_the_content_material_library($content)
-{
+function get_the_content_material_library($content) {
   ob_start();
   get_template_part('project/content-body-material-library');
   $content .= ob_get_clean();
@@ -125,8 +121,7 @@ function get_the_content_material_library($content)
   return $content;
 }
 
-function get_the_content_material_library_2022($content)
-{
+function get_the_content_material_library_2022($content) {
   ob_start();
   get_template_part('project/content-body-material-library-2022');
   $content .= ob_get_clean();
@@ -134,8 +129,7 @@ function get_the_content_material_library_2022($content)
   return $content;
 }
 
-function get_the_content_preview($content)
-{
+function get_the_content_preview($content) {
   ob_start();
   get_template_part('project/content-body-preview');
   $content .= ob_get_clean();
@@ -144,8 +138,7 @@ function get_the_content_preview($content)
 }
 
 
-function get_the_content_download($content)
-{
+function get_the_content_download($content) {
   ob_start();
   get_template_part('project/content-body-download');
   $content .= ob_get_clean();
@@ -153,8 +146,7 @@ function get_the_content_download($content)
   return $content;
 }
 
-function get_the_related_sample_items($content)
-{
+function get_the_related_sample_items($content) {
   ob_start();
   get_template_part('part/sample-related-samples');
   $content .= ob_get_clean();
@@ -164,14 +156,13 @@ function get_the_related_sample_items($content)
 
 
 add_action('wp_enqueue_scripts', 'custom_enqueue_scripts');
-function custom_enqueue_scripts()
-{
+function custom_enqueue_scripts() {
   wp_enqueue_script(
     '3dpst',
     get_theme_file_uri('assets/script.js'),
     array('jquery'),
     filemtime(get_theme_file_path('assets/script.js')),
-    'all'
+    true
   );
 
   if (is_page('materials')) {
@@ -195,9 +186,17 @@ function custom_enqueue_scripts()
   }
 
   wp_enqueue_style(
-    'google-fonts',
-    'https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;700&family=Roboto:wght@700;900&display=swap',
-    array(),
+    'google-fonts-open-sans',
+    'https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap',
+    [],
+    '',
+    'all'
+  );
+
+  wp_enqueue_style(
+    'google-fonts-roboto',
+    'https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap',
+    [],
     '',
     'all'
   );
@@ -220,8 +219,7 @@ function custom_enqueue_scripts()
 }
 
 add_action('init', 'stic_custom_post_types');
-function stic_custom_post_types()
-{
+function stic_custom_post_types() {
 
   $slug   = 'hardware';
   $name   = 'ハードウェア';
@@ -362,8 +360,7 @@ function stic_custom_post_types()
 }
 
 add_action('init', 'stic_custom_taxonomies', 0);
-function stic_custom_taxonomies()
-{
+function stic_custom_taxonomies() {
 
   $slug        = 'hardware-series';
   $object_type = array('hardware'); // 対応させる投稿タイプ
@@ -495,8 +492,7 @@ function stic_custom_taxonomies()
 }
 
 add_action('pre_get_posts', 'custom_pre_get_posts');
-function custom_pre_get_posts($query)
-{
+function custom_pre_get_posts($query) {
   // 管理画面とメインクエリに干渉しないようにする
   if (is_admin() || !$query->is_main_query()) {
     return;
@@ -509,8 +505,7 @@ function custom_pre_get_posts($query)
 }
 
 // タクソノミー名からget_postsの tax_queryの値となる配列を返す
-function stic_get_tax_query_array($tax_slug)
-{
+function stic_get_tax_query_array($tax_slug) {
   $terms = get_the_terms(get_the_ID(), $tax_slug);
 
   if ($terms && !is_wp_error($terms)) {
@@ -530,8 +525,7 @@ function stic_get_tax_query_array($tax_slug)
 
 // プレビューユーザー用
 add_action('init', 'preview_user_action');
-function preview_user_action()
-{
+function preview_user_action() {
   // preview01さん
   if (
     wp_get_current_user()->user_login === 'preview01'
@@ -545,8 +539,7 @@ function preview_user_action()
 }
 
 add_action('admin_bar_menu', 'custom_admin_bar_menu', 9999);
-function custom_admin_bar_menu($wp_admin_bar)
-{
+function custom_admin_bar_menu($wp_admin_bar) {
   $args = array(
     'id'    => 'preview-list',
     'title' => 'レビュー待ち記事一覧',
@@ -557,8 +550,7 @@ function custom_admin_bar_menu($wp_admin_bar)
 }
 
 // プレビューユーザーの管理バーを設定
-function user_preview_admin_bar_menu($wp_admin_bar)
-{
+function user_preview_admin_bar_menu($wp_admin_bar) {
   $wp_admin_bar->remove_node('wp-logo');
   $wp_admin_bar->remove_node('site-name');
   $wp_admin_bar->remove_node('new-content');
@@ -566,16 +558,14 @@ function user_preview_admin_bar_menu($wp_admin_bar)
   $wp_admin_bar->remove_node('search');
 }
 
-function preview_redirect()
-{
+function preview_redirect() {
   wp_redirect(get_home_url() . '/preview');
   exit();
 }
 
 // 造形サンプルの情報テーブルを取得する
 add_shortcode('sample', 'sample_data_shortcode');
-function sample_data_shortcode($atts)
-{
+function sample_data_shortcode($atts) {
   extract(
     shortcode_atts(
       array(
@@ -663,8 +653,7 @@ function sample_data_shortcode($atts)
  * @param string name 属性値
  * @return string 空値以外を返したときだけそのパスが使用される
  */
-function mwform_upload_dir($path, $Data, $key)
-{
+function mwform_upload_dir($path, $Data, $key) {
   /* 2.8.0 〜 */
   return '/mw-wp-form-media';
 }
@@ -676,8 +665,7 @@ add_filter('mwform_upload_dir_mw-wp-form-10', 'mwform_upload_dir', 10, 3);
  * @param string $key メールタグ
  * @param int    $insert_contact_data_id データベースに保存した場合、そのときの Post ID
  */
-function mwform_custom_mail_tag($value, $key, $insert_contact_data_id)
-{
+function mwform_custom_mail_tag($value, $key, $insert_contact_data_id) {
   if ($key === 'file') {
     if ($value) {
       $value = '添付ファイルあり';
@@ -690,8 +678,7 @@ function mwform_custom_mail_tag($value, $key, $insert_contact_data_id)
 add_filter('mwform_custom_mail_tag', 'mwform_custom_mail_tag', 10, 3);
 
 // MW WP Form お問い合わせ内容を選択したら必須項目を追加
-function mwform_validation($Validation, $data, $Data)
-{
+function mwform_validation($Validation, $data, $Data) {
   if ($data['about'] === 'hardware') {
     $Validation->set_rule('hardware', 'noEmpty');
   }
@@ -717,8 +704,7 @@ add_filter(
   }
 );
 
-function stic_get_the_category($classname = null)
-{
+function stic_get_the_category($classname = null) {
   $categories  = get_the_category();
 
   foreach ($categories as $category) {
@@ -732,4 +718,12 @@ function stic_get_the_category($classname = null)
   // if ($category[0]) {
   //   return sprintf('<a class="c-meta__a %s-%s" href="%s" rel="tag"%s>%s</a>', $category[0]->taxonomy, $category[0]->slug, get_category_link($category[0]->term_id), $classname, $category[0]->cat_name);
   // }
+}
+
+
+// Public Post Previewのnonceを延長する
+// デフォルトは48時間 7日に変更
+add_filter('ppp_nonce_life', 'my_nonce_life');
+function my_nonce_life() {
+  return 7 * DAY_IN_SECONDS;
 }
