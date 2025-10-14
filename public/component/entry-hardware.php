@@ -28,41 +28,43 @@
       <?php get_template_part('component/widget', 'entry-body-top'); ?>
       <div id="stic-toc-src">
         <?php the_content(); ?>
-        <?php // ここから
-        ?>
 
         <?php
-        $printer = get_the_terms(get_the_ID(), 'hardware-series')[0]->slug;
+        $terms = get_the_terms(get_the_ID(), 'hardware-series');
+        if (!empty($terms) && !is_wp_error($terms)) {
+          $printer = $terms[0]->slug;
 
-        $args = array(
-          'posts_per_page'   => 12,
-          'numberposts'      => 12,
-          'orderby'          => 'rand',
-          'order'            => 'DESC',
-          'exclude'          => get_the_ID(),
-          'post_type'        => 'sample',
-          'post_status'      => 'publish',
-          'tax_query'        => [
-            [
-              'taxonomy' => 'sample-printer',
-              'field'    => 'slug',
-              'terms'    => [$printer]
+          $args = [
+            'posts_per_page'   => 12,
+            'numberposts'      => 12,
+            'orderby'          => 'rand',
+            'order'            => 'DESC',
+            'exclude'          => get_the_ID(),
+            'post_type'        => 'sample',
+            'post_status'      => 'publish',
+            'tax_query'        => [
+              [
+                'taxonomy' => 'sample-printer',
+                'field'    => 'slug',
+                'terms'    => [$printer]
+              ]
             ]
-          ]
-        );
-        $myposts = get_posts($args);
+          ];
 
-        if ($myposts) : ?>
-          <h2>関連する造形サンプル</h2>
-          <div class="c-sample slick-sample-single">
-            <?php foreach ($myposts as $post) : setup_postdata($post); ?>
-              <?php get_template_part('component/article-sample-archive'); ?>
-            <?php endforeach;
-            wp_reset_postdata(); ?>
-          </div>
-          <p><a href="<?php echo home_url('/sample-printer/' . $printer); ?>" class="c-button _primary_">もっと見る</a></p>
+          $myposts = get_posts($args);
 
-        <?php endif; ?>
+          if ($myposts) : ?>
+            <h2>関連する造形サンプル</h2>
+            <div class="c-sample slick-sample-single">
+              <?php foreach ($myposts as $post) : setup_postdata($post); ?>
+                <?php get_template_part('component/article-sample-archive'); ?>
+              <?php endforeach;
+              wp_reset_postdata(); ?>
+            </div>
+            <p><a href="<?php echo home_url('/sample-printer/' . $printer); ?>" class="c-button _primary_">もっと見る</a></p>
+        <?php endif;
+        }
+        ?>
 
         <h2>製品のお見積り・ご相談・お問い合わせ</h2>
         <p>製品のお見積り・資料請求やご質問・ご相談などはこちらのお問い合わせフォームより承っております。</p>
