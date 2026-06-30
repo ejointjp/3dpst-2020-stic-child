@@ -1,0 +1,20 @@
+/* style-both.css — フロントエンド・エディタ共通スタイル */
+
+.info-box {
+  font-family: sans-serif;
+  padding: 2rem;
+  background-color: #f2f2f5;
+  /* background-color: white; */
+  mix-blend-mode: multiply;
+  border-radius: 1rem;
+  /* box-shadow: 0 10px 15px -15px rgb(0 0 0 /10%); */
+}
+
+.info-box h3 {
+  margin: 0;
+  font-size: 1rem;
+}
+
+.info-box p {
+  margin-top: 1rem;
+}

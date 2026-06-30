@@ -13,9 +13,9 @@ const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 
 // For img-loader
 const imageminGifsicle = require('imagemin-gifsicle');
-const imageminMozjpeg = require('imagemin-mozjpeg');
-const imageminPngquant = require('imagemin-pngquant');
-const imageminSvgo = require('imagemin-svgo');
+const imageminMozjpeg = require('imagemin-mozjpeg').default;
+const imageminPngquant = require('imagemin-pngquant').default;
+const imageminSvgo = require('imagemin-svgo').default;
 
 // For Vue
 const VueLoaderPlugin = require('vue-loader/lib/plugin');
@@ -64,8 +64,9 @@ module.exports = (env, argv) => {
 			minimizer: [
 				// JavaScriptを圧縮する
 				new TerserWebpackPlugin({
-					// sourceMapをmodeによって削除する
-					sourceMap: isDevelopment(),
+					terserOptions: {
+						sourceMap: isDevelopment(),
+					},
 				}),
 				// CSSを圧縮する
 				new OptimizeCSSAssetsWebpackPlugin({
@@ -145,7 +146,9 @@ module.exports = (env, argv) => {
 						{
 							loader: 'stylus-loader',
 							options: {
-								'include css': true,
+								stylusOptions: {
+									'include css': true,
+								},
 							},
 						},
 					],

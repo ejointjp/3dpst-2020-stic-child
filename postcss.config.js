@@ -1,4 +1,4 @@
-const sortCssMediaQueries = require( 'sort-css-media-queries' );
+const sortCssMediaQueries = require( 'sort-css-media-queries/index.js' );
 
 module.exports = {
   plugins: [
