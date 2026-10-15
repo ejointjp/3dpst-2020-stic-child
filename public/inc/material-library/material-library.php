@@ -32,6 +32,7 @@ function c3_custom_post_types()
       // 'custom-fields',
       // 'comments',
       'revisions',
+      'page-attributes', // obento-admin-packで並び替えるため
       // 'post-formats'
     ),
   );

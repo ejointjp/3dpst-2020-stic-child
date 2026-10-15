@@ -361,6 +361,7 @@ function stic_custom_post_types() {
 			'editor',
 			'author',
 			'thumbnail',
+			'page-attributes', // obento-admin-packで並び替えるため
 		// 'excerpt',
 		// 'trackbacks',
 		// 'custom-fields',
