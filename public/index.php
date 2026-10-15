@@ -15,8 +15,7 @@
           <a class="blog-nav-item blog-nav-all" href=" <?php echo home_url('blog'); ?>">ALL</a>
           <?php
           $args = [
-            'order' => 'ASC',
-            'orderby' => 'menu_order'
+            'order' => 'ASC'
           ];
           foreach (get_categories($args) as $category) {
             $current = is_category($category->slug) ? 'current' : '';
