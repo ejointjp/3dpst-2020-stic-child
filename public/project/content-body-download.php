@@ -27,7 +27,7 @@ foreach ( $myposts as $post ) :
 		<div class="download__header">
 		<figure class="download__figure">
 		<?php
-		the_post_thumbnail( $size, 'medium_large' );
+		the_post_thumbnail( 'medium_large' );
 		?>
 		</figure>
 
